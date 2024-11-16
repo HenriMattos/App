@@ -11,45 +11,38 @@ import './offcanvas-main.css';
 function MenuMain() {
     const [show, setShow] = useState(false);
 
-    const handleClose = () => {
-        setShow(false);
-    };
-
+    const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     return (
         <>
-            <TiThMenu className="button" variant="primary" onClick={handleShow} size={30} />
+            <TiThMenu className="button" onClick={handleShow} size={30} />
 
             <Offcanvas show={show} onHide={handleClose} placement='end' className="offcanvas-show">
-                <Offcanvas.Header closeButton className='close-button'>
-                    <Offcanvas.Title>
+                <div className="offcanvas-header">
+                    <div className="profile-header">
                         <img src={require('../img/bruno-profile.png')} alt="Foto de perfil" className="profile-main" />
-                        <div className='username'>
-                            Bruno da Silva
-                        </div>
-                        <AiOutlineLoading3Quarters className='xp-bar' />
-                        <div className='level'>Nv 10</div>
-                    </Offcanvas.Title>
-                </Offcanvas.Header>
+                        <div className="username">Bruno da Silva</div>
+                    </div>
+                    <button className="btn-close" onClick={handleClose} />
+                </div>
                 <Offcanvas.Body>
+                    <AiOutlineLoading3Quarters className='xp-bar' />
+                    <div className='level'>Nv 10</div>
+
                     <p className='information'>
-                        <IoMdPin className='profile-pin-icon' size={35} />
-                        <div className='information-background'>Pins colocados: 13</div>
+                        <IoMdPin size={30} /> 
+                        <div className='information-background'>Pins adicionados: 13</div>
                     </p>
                     <p className='information'>
-                        <FaStar className='profile-star-icon' size={30} />
+                        <FaStar size={30} /> 
                         <div className='information-background'>Pins avaliados: 22</div>
                     </p>
                     <p className='information'>
                         Reputação: <b className='user-status'>Confiável</b>
                     </p>
 
-                    <ul>
-                        <Button className="button-menu">
-                            Configurações
-                        </Button>
-                    </ul>
+                    <Button className="button-menu">Configurações</Button>
                 </Offcanvas.Body>
             </Offcanvas>
         </>

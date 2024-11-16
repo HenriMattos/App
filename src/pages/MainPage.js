@@ -1,10 +1,10 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MenuMain from '../components/offcanvas-main';
+import MenuMain from '../components/offcanvas-main.js';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import '../components/mainpage.css';
-import MapboxExample from '../components/MapboxExample.js';
+import MapboxExample from '../components/MapPage.js';
 
 function MainPage() {
 
