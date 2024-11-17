@@ -18,16 +18,16 @@ body {
     }
 }
 
-/* Botão que ativa o offcanvas (hambúrguer) */
+/* Botão de menu hambúrguer */
 .button {
     position: absolute;
-    right: 30px;
     top: 30px;
-    padding: 10px;
-    height: 48px;
+    right: 30px;
     width: 48px;
-    color: #007bff;
+    height: 48px;
+    padding: 10px;
     background-color: white;
+    color: #007bff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -42,23 +42,25 @@ body {
 
 /* Offcanvas */
 .offcanvas-show {
-    background-color: #ffffff;
-    height: 50%;
-    width: 50%;
-    max-width: 300px;
-    border-radius: 0px 0 0 5px;
-    animation: 0.5s ease-out 0s 1 slideInFromRight;
-    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: flex-start;
+    width: 50%;
+    max-width: 300px;
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 5px 0 0 5px;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.2);
+    animation: slideInFromRight 0.5s ease-out;
 }
 
 .offcanvas-header {
     display: flex;
     justify-content: space-between;
-    padding: 10px 20px;
     align-items: center;
+    padding: 10px 20px;
+    width: 100%;
 }
 
 .profile-header {
@@ -72,19 +74,16 @@ body {
     height: 50px;
     border-radius: 5px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
 }
 
 .username {
     font-size: 20px;
-    font-weight: normal;
     color: #007bff;
-    margin-top: 10px;
 }
 
+/* Botão de fechar */
 .btn-close {
-    background-color: none;
-    border: solid 1px #ff2c2c;
+    border: 1px solid #ff2c2c;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -105,51 +104,56 @@ body {
 
 .xp-bar {
     color: #00d977;
-    margin-top: 5px;
+    margin: 10px 0;
     animation: spin 2s linear infinite;
+    display: block;
+    text-align: center;
 }
 
 .level {
     font-size: 1rem;
-    color: #00d977;
     font-weight: bold;
+    color: #00d977;
+    margin: 10px 0;
+    text-align: center;
 }
 
 .information {
     margin: 10px 0;
-    color: #faa300;
     font-size: 1rem;
     text-align: center;
+    color: #faa300;
 }
 
 .information-background {
     margin-top: 5px;
-    background: none;
-    color: #faa300;
     padding: 8px 20px;
-    border-radius: 5px;
     font-size: 16px;
-    border: solid 1px #faa300;
-    font-weight: normal;
+    color: #faa300;
+    background: none;
+    border: 1px solid #faa300;
+    border-radius: 5px;
 }
 
 .user-status {
-    color: #00d977;
     font-weight: bold;
+    color: #00d977;
 }
 
+/* Botões */
 .button-menu {
-    background: #007bff;
+    margin-top: 20px;
+    padding: 10px 15px; /* Menor largura */
+    font-size: 14px; /* Texto menor para ajustar proporção */
+    font-weight: bold;
     color: #ffffff;
-    padding: 12px 20px;
+    background: #007bff;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
-    border: none;
-    font-weight: bold;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+    text-align: center; /* Centralizado */
 }
 
 .button-menu:hover {
@@ -158,242 +162,12 @@ body {
     transform: scale(1.02);
 }
 
-/* Responsividade */
-
-/* 320px */
-@media (max-width: 320px) {
-    .offcanvas-show {
-        height: 80%;
-        width: 95%;
-    }
-
-    .profile-main {
-        width: 35px;
-        height: 35px;
-    }
-
-    .username {
-        font-size: 16px;
-    }
-
-    .information-background {
-        font-size: 14px;
-        padding: 5px 15px;
-    }
-
-    .button {
-        top: 15px;
-        right: 15px;
-        height: 35px;
-        width: 35px;
-    }
-
-    .button-menu {
-        font-size: 14px;
-        padding: 8px 15px;
-    }
-}
-
-/* 375px */
-@media (max-width: 375px) {
-    .offcanvas-show {
-        height: 75%;
-        width: 90%;
-    }
-
-    .profile-main {
-        width: 40px;
-        height: 40px;
-    }
-
-    .username {
-        font-size: 18px;
-    }
-
-    .information-background {
-        font-size: 15px;
-        padding: 6px 18px;
-    }
-
-    .button {
-        top: 20px;
-        right: 20px;
-        height: 38px;
-        width: 38px;
-    }
-
-    .button-menu {
-        font-size: 15px;
-        padding: 10px 18px;
-    }
-}
-
-/* 425px */
-@media (max-width: 425px) {
-    .offcanvas-show {
-        height: 70%;
-        width: 85%;
-    }
-
-    .profile-main {
-        width: 45px;
-        height: 45px;
-    }
-
-    .username {
-        font-size: 20px;
-    }
-
-    .information-background {
-        font-size: 16px;
-        padding: 8px 20px;
-    }
-
-    .button {
-        top: 25px;
-        right: 25px;
-        height: 40px;
-        width: 40px;
-    }
-
-    .button-menu {
-        font-size: 16px;
-        padding: 12px 20px;
-    }
-}
-
-/* 768px */
-@media (max-width: 768px) {
-    .offcanvas-show {
-        height: 65%;
-        width: 70%;
-    }
-
-    .profile-main {
-        width: 50px;
-        height: 50px;
-    }
-
-    .username {
-        font-size: 22px;
-    }
-
-    .information-background {
-        font-size: 17px;
-        padding: 10px 25px;
-    }
-
-    .button {
-        top: 30px;
-        right: 30px;
-        height: 45px;
-        width: 45px;
-    }
-
-    .button-menu {
-        font-size: 16px;
-        padding: 12px 20px;
-    }
-}
-
-/* 1024px */
-@media (max-width: 1024px) {
-    .offcanvas-show {
-        height: 60%;
-        width: 60%;
-    }
-
-    .profile-main {
-        width: 60px;
-        height: 60px;
-    }
-
-    .username {
-        font-size: 18px;
-    }
-
-    .information-background {
-        font-size: 18px;
-        padding: 12px 30px;
-    }
-
-    .button {
-        top: 30px;
-        right: 30px;
-        height: 48px;
-        width: 48px;
-    }
-
-    .button-menu {
-        font-size: 18px;
-        padding: 14px 25px;
-    }
-}
-
-/* 1444px */
-@media (max-width: 1440px) {
-    .offcanvas-show {
-        height: 60%;
-        width: 60%;
-    }
-
-    .profile-main {
-        width: 60px;
-        height: 60px;
-    }
-
-    .username {
-        font-size: 18px;
-    }
-
-    .information-background {
-        font-size: 18px;
-        padding: 12px 30px;
-    }
-
-    .button {
-        top: 30px;
-        right: 30px;
-        height: 48px;
-        width: 48px;
-    }
-
-    .button-menu {
-        font-size: 18px;
-        padding: 14px 25px;
-    }
-}
-
-/* 1640px */
-@media (max-width: 1640px) {
-    .offcanvas-show {
-        height: 55%;
-        width: 60%;
-    }
-
-    .profile-main {
-        width: 60px;
-        height: 60px;
-    }
-
-    .username {
-        font-size: 18px;
-    }
-
-    .information-background {
-        font-size: 18px;
-        padding: 12px 30px;
-    }
-
-    .button {
-        top: 30px;
-        right: 30px;
-        height: 48px;
-        width: 48px;
-    }
-
-    .button-menu {
-        font-size: 18px;
-        padding: 14px 25px;
-    }
+/* Centralização geral */
+.offcanvas-body > .information,
+.offcanvas-body > .level,
+.offcanvas-body > .xp-bar,
+.offcanvas-body > .button-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

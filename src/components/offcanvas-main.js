@@ -26,7 +26,6 @@ function MenuMain() {
                     </div>
                     <button className="btn-close" onClick={handleClose} />
                 </div>
-                <Offcanvas.Body>
                     <AiOutlineLoading3Quarters className='xp-bar' />
                     <div className='level'>Nv 10</div>
 
@@ -43,7 +42,6 @@ function MenuMain() {
                     </p>
 
                     <Button className="button-menu">Configurações</Button>
-                </Offcanvas.Body>
             </Offcanvas>
         </>
     );
