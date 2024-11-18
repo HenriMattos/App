@@ -50,6 +50,7 @@ const MapboxExample = () => {
             center: [-60.0217, -3.1174],
             zoom: 10, // Zoom inicial para visualizar prédios em 3D
             pitchWithRotate: false, // Inclinação inicial do mapa para 3D
+            pitch: 50, // Inclinação inicial do mapa para 3D
             bearing: -17.6, // Rotação inicial do mapa
             minZoom: 11,
             dragRotate: true,
@@ -86,7 +87,7 @@ const MapboxExample = () => {
                     'fill-extrusion-color': '#bfab95', // Cor dos prédios
                     'fill-extrusion-height': ['get', 'height'],
                     'fill-extrusion-base': ['get', 'min_height'],
-                    'fill-extrusion-opacity': 0.6
+                    'fill-extrusion-opacity': 0.5
                 }
             });
 

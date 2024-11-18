@@ -168,6 +168,7 @@ form {
   .img-container {
     height: 50vh; /* Diminui a altura da imagem */
     background-size: contain;
+    margin-bottom: 20px;
   }
 
   .login-container {
@@ -183,9 +184,16 @@ form {
   .login-container h2 {
     font-size: 28px;
   }
+  
 }
 
 @media (max-width: 425px) {
+  .img-container {
+    height: 50vh; /* Diminui a altura da imagem */
+    background-size: contain;
+    margin-bottom: 20px;
+  }
+
   .login-container h1 {
     font-size: 28px;
     margin-bottom: 30px;
@@ -199,9 +207,21 @@ form {
     padding: 10px;
     font-size: 14px;
   }
+
+  .btn-about {
+    padding: 10px;
+    font-size: 14px;
+  }
+
 }
 
 @media (max-width: 375px) {
+  .img-container {
+    height: 50vh; /* Diminui a altura da imagem */
+    background-size: contain;
+    margin-bottom: 35px;
+  }
+
   .login-container h1 {
     font-size: 24px;
     margin-bottom: 20px;
@@ -215,11 +235,18 @@ form {
     padding: 8px;
     font-size: 14px;
   }
+
+  .btn-about {
+    padding: 8px;
+    font-size: 14px;
+  }
+
 }
 
 @media (max-width: 320px) {
+
   .login-container {
-    padding: 20px;
+    padding: auto;
   }
 
   .login-container h1 {
@@ -235,4 +262,10 @@ form {
     padding: 8px;
     font-size: 12px;
   }
+
+  .btn-about {
+    padding: 8px;
+    font-size: 12px;
+  } 
+
 }
