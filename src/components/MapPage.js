@@ -51,8 +51,8 @@ const MapboxExample = () => {
             zoom: 12,
             minZoom: 11.3,
             pitchWithRotate: false,
-            dragRotate: false,
-            touchZoomRotate: false
+            dragRotate: true,
+            touchZoomRotate: true
         });
     
         const geocoder = new MapboxGeocoder({
