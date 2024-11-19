@@ -3,6 +3,21 @@
     cursor: url('../img/cursor-marker.png'), auto !important;
 }
 
+.geocoder-container {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    width: 50%; /* Ajuste conforme necessário */
+}
+
+.mapboxgl-ctrl-geocoder {
+    min-width: 100%;
+    max-width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 /* Estilos de Filtro */
 .filter-menu {
     bottom: 2%; /* Ajuste vertical conforme necessário */

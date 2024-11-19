@@ -66,7 +66,7 @@ const MapboxExample = () => {
         });
     
         mapRef.current.addControl(geocoder);
-        mapRef.current.addControl(new mapboxgl.NavigationControl({ showZoom: true, showCompass: false }));
+        mapRef.current.addControl(new mapboxgl.NavigationControl({ showZoom: false, showCompass: false }));
     
         mapRef.current.on('click', (event) => {
             const { lng, lat } = event.lngLat;
