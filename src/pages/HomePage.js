@@ -142,7 +142,7 @@ function LoginPage() {
         )}
         {loggedInUser && (
           <button onClick={() => navigate('/main')} className="btn-about">
-            Ir para a página principal
+            Ir para a página do Mapa
           </button>
         )}
         {/* Botão para a página "Sobre o Projeto" */}

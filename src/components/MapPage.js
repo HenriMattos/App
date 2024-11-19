@@ -46,19 +46,13 @@ const MapboxExample = () => {
     
         mapRef.current = new mapboxgl.Map({
             container: mapContainerRef.current,
-            style: 'mapbox://styles/mapbox/streets-v12', // Estilo que suporta prédios em 3D
+            style: 'mapbox://styles/mapbox/streets-v12',
             center: [-60.0217, -3.1174],
-            zoom: 10, // Zoom inicial para visualizar prédios em 3D
-            pitchWithRotate: false, // Inclinação inicial do mapa para 3D
-            pitch: 50, // Inclinação inicial do mapa para 3D
-            bearing: -17.6, // Rotação inicial do mapa
-            minZoom: 11,
-            dragRotate: true,
-            touchZoomRotate: true,
-            maxBounds: [
-                [-60.118532, -3.160522], // SW
-                [-59.816644, -2.922472]  // NE
-            ]
+            zoom: 12,
+            minZoom: 11.3,
+            pitchWithRotate: false,
+            dragRotate: false,
+            touchZoomRotate: false
         });
     
         const geocoder = new MapboxGeocoder({
@@ -68,58 +62,36 @@ const MapboxExample = () => {
             proximity: {
                 longitude: -60.0217,
                 latitude: -3.1174
-            },
+            }
         });
     
         mapRef.current.addControl(geocoder);
-
-        mapRef.current.on('load', () => {
-            const map = mapRef.current;
-
-            // Alterar a cor dos prédios para #69767d
-            map.addLayer({
-                id: '3d-buildings',
-                source: 'composite',
-                'source-layer': 'building',
-                filter: ['==', 'extrude', 'true'],
-                type: 'fill-extrusion',
-                paint: {
-                    'fill-extrusion-color': '#bfab95', // Cor dos prédios
-                    'fill-extrusion-height': ['get', 'height'],
-                    'fill-extrusion-base': ['get', 'min_height'],
-                    'fill-extrusion-opacity': 0.5
-                }
-            });
-
-            // Alterar a cor das ruas para #7d7d7d
-            map.setPaintProperty('road', 'line-color', '#7d7d7d');
-        });
-
+        mapRef.current.addControl(new mapboxgl.NavigationControl({ showZoom: true, showCompass: false }));
     
-        // Evento de clique no mapa
         mapRef.current.on('click', (event) => {
             const { lng, lat } = event.lngLat;
-    
+        
             // Verifica se o clique foi diretamente em cima de um marcador
             const elementsAtClick = document.elementsFromPoint(event.originalEvent.clientX, event.originalEvent.clientY);
             const clickedOnMarker = elementsAtClick.some(el => el.classList.contains('mapboxgl-marker'));
-    
+        
+            // Se o clique foi em um marcador existente, não adicionar um novo
             if (clickedOnMarker) {
                 console.log('Clique em um marcador existente, mostrando popup.');
                 return;
             }
-    
+        
             // Adiciona o novo pin normalmente
             setSelectedCoordinates([lng, lat]);
-    
+        
             if (currentMarkerRef.current) {
                 currentMarkerRef.current.remove();
             }
-    
+        
             const newMarker = new mapboxgl.Marker({ color: '#177245' })
                 .setLngLat([lng, lat])
                 .addTo(mapRef.current);
-    
+        
             currentMarkerRef.current = newMarker;
     
             // Obter informações de endereço usando a API do Mapbox Geocoding
