@@ -51,15 +51,14 @@ function MenuMain() {
     };
 
     const badgeIcons = {
-        bronze: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.1)" />,  
-        prata: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.2)" />,
-        ouro: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.2)" />,
-        saphira: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.4)" />,
-        esmeralda: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.6)" />,
-        ruby: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.7)" />,
-        diamante: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.8)" />,
-        mistico: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.9)" />,
-        lendario: <BsFillStarFill size={30} color="rgba(0, 123, 255, 1)" />
+        bronze: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.2)" />,  
+        prata: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.4)" />,
+        ouro: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.8)" />,
+        saphira: <BsFillStarFill size={30} color="rgba(0, 123, 255, 1)" />,
+        esmeralda: <BsFillStarFill size={30} color="rgba(255, 165, 0, 0.2)" />,
+        ruby: <BsFillStarFill size={30} color="rgba(255, 165, 0, 0.4)" />,
+        diamante: <BsFillStarFill size={30} color="rgba(255, 165, 0, 0.8)" />,
+        mistico: <BsFillStarFill size={30} color="rgba(255, 165, 0, 1)" />,
     };
 
     useEffect(() => {
