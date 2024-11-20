@@ -4,33 +4,70 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Modal from 'react-bootstrap/Modal';
 import { IoMdSettings } from "react-icons/io";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { IoMdPin } from "react-icons/io";
-import { FaStar } from "react-icons/fa";
-import { Cropper } from 'react-cropper';
-import 'cropperjs/dist/cropper.css';
-
-
+import { BsFillStarFill } from "react-icons/bs";
+import { FaRegStar } from "react-icons/fa";  
 import { getLoggedInUser } from '../data/accountsData';
+import { Cropper } from 'react-cropper';
+import 'cropperjs/dist/cropper.css'; // Ensure this line is also present
 import './offcanvas-main.css';
 
 function MenuMain() {
     const [show, setShow] = useState(false);
-    const [showModeratorModal, setShowModeratorModal] = useState(false);
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [loggedInUser, setLoggedInUser] = useState(null);
-    const [profilePicture, setProfilePicture] = useState(null);
-    const [pinsAdded, setPinsAdded] = useState(0);
-    const [pinsReviewed, setPinsReviewed] = useState(0);
-    const [moderationReason, setModerationReason] = useState('');
     const [newProfilePicture, setNewProfilePicture] = useState(null);
+    const [profilePicture, setProfilePicture] = useState(null);
+    const [userName, setUserName] = useState('');
+    const [pinsAdded, setPinsAdded] = useState(0);
+    const [newUserName, setNewUserName] = useState('');
     const [cropper, setCropper] = useState(null);
+
+    // Função para gerar o ID do usuário conforme as regras fornecidas
+    const generateUserID = (name) => {
+        const firstThreeLettersReversed = name.substring(0, 3).split('').reverse().join('');
+        const currentDate = new Date();
+        const day = currentDate.getDate();  // Pega o número do dia
+        const hour = currentDate.getHours();  // Pega a hora (sem minutos ou segundos)
+        
+        // Concatenando as partes para gerar o ID
+        return `@user_${firstThreeLettersReversed}${day}${hour}`;
+    };
+
+    const getLevel = (pins) => {
+        let level = 1;
+        let requiredPins = 1;
+        while (pins >= requiredPins) {
+            level++;
+            pins -= requiredPins;
+            requiredPins = level * level;
+        }
+        return level;
+    };
+
+    const getBadge = (level) => {
+        const badges = ['bronze', 'prata', 'ouro', 'saphira', 'esmeralda', 'ruby', 'diamante', 'mistico'];
+        const index = Math.floor(level / 10);
+        return badges[index] || 'Lendário';
+    };
+
+    const badgeIcons = {
+        bronze: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.1)" />,  
+        prata: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.2)" />,
+        ouro: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.2)" />,
+        saphira: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.4)" />,
+        esmeralda: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.6)" />,
+        ruby: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.7)" />,
+        diamante: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.8)" />,
+        mistico: <BsFillStarFill size={30} color="rgba(0, 123, 255, 0.9)" />,
+        lendario: <BsFillStarFill size={30} color="rgba(0, 123, 255, 1)" />
+    };
 
     useEffect(() => {
         const user = getLoggedInUser();
         if (user) {
             setLoggedInUser(user);
             setPinsAdded(user.pinsAdded || 0);
-            setPinsReviewed(user.pinsReviewed || 0);
+            setUserName(user.name || 'Usuário');
         }
 
         const storedPicture = localStorage.getItem('profilePicture');
@@ -38,6 +75,16 @@ function MenuMain() {
             setProfilePicture(storedPicture);
         }
     }, []);
+
+    useEffect(() => {
+        if (loggedInUser && loggedInUser.name) {
+            const generatedUserID = generateUserID(loggedInUser.name);
+            setLoggedInUser((prevUser) => ({
+                ...prevUser,
+                id: generatedUserID
+            }));
+        }
+    }, [loggedInUser]);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -48,23 +95,22 @@ function MenuMain() {
         window.location.reload();
     };
 
-    const handleProfilePictureChange = () => setShowProfileModal(true);
-    const handleModerationRequest = () => setShowModeratorModal(true);
+    const handleProfileModal = () => setShowProfileModal(true);
 
-    const handleProfilePictureSubmit = () => {
-        if (cropper) {
-            const croppedImage = cropper.getCroppedCanvas().toDataURL();
-            setProfilePicture(croppedImage);
-            localStorage.setItem('profilePicture', croppedImage);
-            setNewProfilePicture(null);
-            setShowProfileModal(false);
-            alert('Foto de perfil alterada com sucesso!');
-        }
+    const handleBackToMenu = () => {
+        setShow(false);  // Fecha o menu de configurações (offcanvas)
     };
 
-    const handleModerationSubmit = () => {
-        alert(`Pedido de moderação enviado:\n${moderationReason}`);
-        setShowModeratorModal(false);
+    const handleProfileSubmit = () => {
+        const croppedImage = cropper?.getCroppedCanvas()?.toDataURL();
+        if (newUserName.trim()) setUserName(newUserName);
+        if (croppedImage) {
+            setProfilePicture(croppedImage);
+            localStorage.setItem('profilePicture', croppedImage);
+        }
+        setNewUserName('');
+        setShowProfileModal(false);
+        alert('Conta atualizada com sucesso!');
     };
 
     const handleFileChange = (event) => {
@@ -72,6 +118,9 @@ function MenuMain() {
             setNewProfilePicture(event.target.files[0]);
         }
     };
+
+    const userLevel = getLevel(pinsAdded);
+    const userBadge = getBadge(userLevel);
 
     return (
         <>
@@ -85,81 +134,83 @@ function MenuMain() {
                             alt="Foto de perfil"
                             className="profile-main"
                         />
-                        <div className="username">
-                            {loggedInUser ? loggedInUser.name : 'Admin Bruno'}
+                        <div className="username">{userName}</div>
+                        <div className="user-id" style={{ color: '#6c757d', fontSize: '14px' }}>
+                            ID: {loggedInUser ? loggedInUser.id : '0000'}
                         </div>
                     </div>
-                    <button className="btn-close" onClick={handleClose} />
                 </div>
                 <AiOutlineLoading3Quarters className='xp-bar' />
-                <div className='level'>Nv {loggedInUser ? 1 : 100}</div>
+                <div className='level'>Nv {userLevel}</div>
+
+                <div className='badge-container' style={{ 
+                        display: 'flex', 
+                        flexWrap: 'wrap', 
+                        gap: '5px', 
+                        justifyContent: 'center', 
+                        alignItems: 'center', 
+                        marginTop: '5px', 
+                    }}>
+                    {Object.keys(badgeIcons).map((badge, index) => (
+                        <div
+                            key={index}
+                            style={{
+                                width: '50px',
+                                height: '50px',
+                                marginBottom: '5px',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: '5px',
+                                backgroundColor: badge === userBadge ? 'transparent' : '#ebf1f7',
+                                border: '1px solid #ccc',
+                            }}
+                        >
+                            {badgeIcons[badge]}
+                        </div>
+                    ))}
+                </div>
 
                 <p className='information'>
-                    <IoMdPin size={30} />
                     <div className='information-background'>
-                        Pins adicionados: {loggedInUser ? pinsAdded : 100}
+                        Insígnia atual: <b>{userBadge}</b>
                     </div>
                 </p>
+
                 <p className='information'>
-                    <FaStar size={30} />
                     <div className='information-background'>
-                        Pins avaliados: {loggedInUser ? pinsReviewed : 100}
+                        Pins adicionados: {pinsAdded}
                     </div>
-                </p>
-                <p className='information'>
-                    Reputação: <b className='user-status'>{loggedInUser ? 'Novo Usuário' : 'Super Confiável'}</b>
                 </p>
 
                 {loggedInUser && (
                     <>
-                        <Button className="button-menu" onClick={handleProfilePictureChange}>
-                            Foto de Perfil
-                        </Button>
-                        <Button className="button-menu moderator-button" onClick={handleModerationRequest}>
-                            Fale Conosco
+                        <Button className="button-menu" onClick={handleProfileModal}>
+                            Editar Conta
                         </Button>
                         <Button className="button-menu logout-button" onClick={handleLogout}>
                             Sair da Conta
+                        </Button>
+                        <Button className="button-menu back-button" onClick={handleBackToMenu}>
+                            <i className="fa fa-arrow-left"></i> Voltar
                         </Button>
                     </>
                 )}
             </Offcanvas>
 
-            {/* Modal: Ser Moderador */}
-            <Modal show={showModeratorModal} onHide={() => setShowModeratorModal(false)} centered>
-                <div className="modal-card">
-                    <div className="modal-card-header">Fale Conosco</div>
-                    <div className="modal-card-body">
-                        <textarea
-                            rows={3}
-                            value={moderationReason}
-                            onChange={(e) => setModerationReason(e.target.value)}
-                            placeholder="Explique aqui..."
-                        />
-                    </div>
-                    <div className="modal-card-footer">
-                        <Button variant="secondary" onClick={() => setShowModeratorModal(false)} className="button-menu">
-                            Cancelar
-                        </Button>
-                        <Button variant="primary" onClick={handleModerationSubmit} className="button-menu">
-                            Enviar
-                        </Button>
-                    </div>
-                </div>
-            </Modal>
-
-
-            {/* Modal: Alterar Foto de Perfil */}
+            {/* Modal: Editar Conta */}
             <Modal show={showProfileModal} onHide={() => setShowProfileModal(false)} centered>
                 <div className="modal-card">
-                    <div className="modal-card-header">Mudar Foto de Perfil</div>
+                    <div className="modal-card-header">Editar Conta</div>
                     <div className="modal-card-body">
+                        <input
+                            type="text"
+                            placeholder="Novo Nome de Usuário"
+                            value={newUserName}
+                            onChange={(e) => setNewUserName(e.target.value)}
+                        />
                         {!newProfilePicture ? (
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleFileChange}
-                            />
+                            <input type="file" accept="image/*" onChange={handleFileChange} />
                         ) : (
                             <Cropper
                                 style={{ height: 300, width: "100%" }}
@@ -178,26 +229,16 @@ function MenuMain() {
                         <Button variant="secondary" onClick={() => setShowProfileModal(false)} className="button-menu">
                             Cancelar
                         </Button>
-                        {newProfilePicture && cropper ? (
-                            <Button
-                                variant="primary"
-                                onClick={() => {
-                                    const croppedImage = cropper.getCroppedCanvas().toDataURL();
-                                    setProfilePicture(croppedImage);
-                                    localStorage.setItem('profilePicture', croppedImage);
-                                    setNewProfilePicture(null);
-                                    setShowProfileModal(false);
-                                    alert('Foto de perfil alterada com sucesso!');
-                                }}
-                                className="button-menu"
-                            >
-                                Confirmar
-                            </Button>
-                        ) : null}
+                        <Button
+                            variant="primary"
+                            onClick={handleProfileSubmit}
+                            className="button-menu"
+                        >
+                            Confirmar
+                        </Button>
                     </div>
                 </div>
             </Modal>
-
         </>
     );
 }

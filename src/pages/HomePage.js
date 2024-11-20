@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AlertCard from '../components/AlertCard'; // Importa o componente de alerta
 import '../components/homepage.css';
 import { verifyAccount, registerAccount, getLoggedInUser } from '../data/accountsData'; // Importa o "banco de dados"
 
@@ -14,7 +15,8 @@ function LoginPage() {
   });
   const [loggedInUser, setLoggedInUser] = useState(null);
 
-  // Verificar se há um usuário logado ao carregar a página
+  const [alert, setAlert] = useState({ message: '', type: '', show: false });
+
   useEffect(() => {
     const user = getLoggedInUser();
     if (user) {
@@ -26,28 +28,26 @@ function LoginPage() {
     event.preventDefault();
 
     if (isLogin) {
-      // Verifica login
       const user = verifyAccount(formData.email, formData.password);
       if (user) {
-        setLoggedInUser(user); // Define o usuário logado
-        alert(`Bem-vindo de volta, ${user.name}!`);
+        setLoggedInUser(user);
+        setAlert({ message: `Bem-vindo de volta, ${user.name}!`, type: 'success', show: true });
         navigate('/main');
       } else {
-        alert('Credenciais inválidas. Tente novamente.');
+        setAlert({ message: 'Credenciais inválidas. Tente novamente.', type: 'error', show: true });
       }
     } else {
-      // Registra nova conta
       if (formData.password !== formData.confirmPassword) {
-        alert('As senhas não correspondem.');
+        setAlert({ message: 'As senhas não correspondem.', type: 'warning', show: true });
         return;
       }
 
       const result = registerAccount(formData.name, formData.email, formData.password);
       if (result.success) {
-        alert(result.message);
-        setIsLogin(true); // Muda para tela de login
+        setAlert({ message: result.message, type: 'success', show: true });
+        setIsLogin(true);
       } else {
-        alert(result.message);
+        setAlert({ message: result.message, type: 'error', show: true });
       }
     }
   };
@@ -63,11 +63,18 @@ function LoginPage() {
     window.location.href = 'https://exploramanaus.github.io/view/';
   };
 
+  const closeAlert = () => {
+    setAlert({ ...alert, show: false });
+  };
+
   return (
     <div className="login-page">
       <div className="img-container"></div>
       <div className="login-container">
         <h1>Explora Manaus</h1>
+        {alert.show && (
+          <AlertCard message={alert.message} type={alert.type} onClose={closeAlert} />
+        )}
         {loggedInUser ? (
           <h2>Bem-vindo, {loggedInUser.name}!</h2>
         ) : (
@@ -145,7 +152,6 @@ function LoginPage() {
             Ir para a página do Mapa
           </button>
         )}
-        {/* Botão para a página "Sobre o Projeto" */}
         <button type="button" onClick={handleAboutRedirect} className="btn-about">
           Sobre o Projeto
         </button>

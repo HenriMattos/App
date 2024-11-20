@@ -18,6 +18,166 @@ body {
     }
 }
 
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Botão do menu (Configurações) */
+.button {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    padding: 10px;
+    background-color: white;
+    color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #FF873D;
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Offcanvas */
+.offcanvas-show {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 50%;
+    max-width: 300px;
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 10px 0 0 10px;
+    animation: slideInFromRight 0.5s ease-out;
+    padding: 20px;
+}
+
+.offcanvas-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-main {
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+.username {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.user-id {
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.5);
+    margin-top: -15px;
+}
+
+/* Corpo do Offcanvas */
+.xp-bar {
+    color: #00d977;
+    animation: spin 2s linear infinite;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.level {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #00d977;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.information {
+    margin: 5px 0;
+    font-size: 1rem;
+    text-align: center;
+    color: #faa300;
+}
+
+.information-background {
+    margin-top: 5px;
+    padding: 8px 20px;
+    font-size: 16px;
+    color: #007bff;
+    background: none;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+}
+
+.user-status {
+    font-weight: bold;
+    color: #00d977;
+}
+
+/* Botões */
+
+.button-menu {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    background: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+}
+
+.button-menu:hover {
+    background-color: #FF873D;
+    color: white;
+    transform: scale(1.05);
+}
+
+.logout-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    background: #ff5353;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+}
+
+.button-menu:hover {
+    background-color: #FF873D;
+    color: white;
+    transform: scale(1.05);
+}
+
 /* Estilo Geral dos Cards (Modais) */
 .modal-card {
     background-color: #ffffff;
@@ -42,17 +202,20 @@ body {
 }
 
 .modal-card-body textarea,
+.modal-card-body input[type="text"],
 .modal-card-body input[type="file"] {
     width: 100%;
     max-width: 90%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #faa300;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 16px;
     transition: border-color 0.3s ease;
+    background-color: #f8f9fa;
 }
 
 .modal-card-body textarea:focus,
+.modal-card-body input[type="text"]:focus,
 .modal-card-body input[type="file"]:focus {
     outline: none;
     border-color: #007bff;
@@ -62,7 +225,7 @@ body {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
     width: 100%;
 }
 
@@ -73,7 +236,7 @@ body {
 }
 
 .modal-card-body input[type="file"] {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .cropper-container {
@@ -88,150 +251,6 @@ body {
     width: 100%;
     max-width: 90%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Botão de menu hambúrguer */
-.button {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    width: 48px;
-    height: 48px;
-    padding: 10px;
-    background-color: white;
-    color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.3s ease, color 0.3s ease;
-}
-
-.button:hover {
-    background-color: #FF873D;
-    color: white;
-    transform: scale(1.02);
-}
-
-/* Offcanvas */
-.offcanvas-show {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    width: 50%;
-    max-width: 300px;
-    height: 100%;
-    background-color: #ffffff;
-    border-radius: 5px 0 0 5px;
-    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.2);
-    animation: slideInFromRight 0.5s ease-out;
-}
-
-.offcanvas-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    width: 100%;
-}
-
-.profile-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.profile-main {
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.username {
-    font-size: 20px;
-    color: #007bff;
-}
-
-/* Botão de fechar */
-.btn-close {
-    border: 1px solid #ff2c2c;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.btn-close:hover {
-    background-color: #ff2c2c;
-}
-
-/* Corpo do Offcanvas */
-.offcanvas-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    text-align: center;
-}
-
-.xp-bar {
-    color: #00d977;
-    margin: 10px 0;
-    animation: spin 2s linear infinite;
-    display: block;
-    text-align: center;
-}
-
-.level {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #00d977;
-    margin: 10px 0;
-    text-align: center;
-}
-
-.information {
-    margin: 10px 0;
-    font-size: 1rem;
-    text-align: center;
-    color: #faa300;
-}
-
-.information-background {
-    margin-top: 5px;
-    padding: 8px 20px;
-    font-size: 16px;
-    color: #faa300;
-    background: none;
-    border: 1px solid #faa300;
-    border-radius: 5px;
-}
-
-.user-status {
-    font-weight: bold;
-    color: #00d977;
-}
-
-/* Botões */
-.button-menu {
-    margin-top: 20px;
-    padding: 10px 15px; /* Menor largura */
-    font-size: 14px; /* Texto menor para ajustar proporção */
-    font-weight: bold;
-    color: #ffffff;
-    background: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, background-color 0.3s ease, color 0.3s ease;
-    text-align: center; /* Centralizado */
-}
-
-.button-menu:hover {
-    background-color: #FF873D;
-    color: white;
-    transform: scale(1.02);
 }
 
 /* Centralização geral */
