@@ -42,7 +42,7 @@ const MapboxExample = () => {
     const [markers, setMarkers] = useState([]); // Definindo markers antes de usá-lo
 
     useEffect(() => {
-        mapboxgl.accessToken = 'pk.eyJ1IjoiZ3VpbGltYWRldiIsImEiOiJjbTBkYmc4aDcwYm12MnFweGEyY283cmhtIn0.1S4flGeLkg8EI2H2-OjDLw';
+        mapboxgl.accessToken = 'pk.eyJ1IjoiaGVucmltYXR0b3oiLCJhIjoiY20zMzdwYnhuMHR3MTJtcTF5cXFpZGlpYSJ9.5nomHU0qr82XlHDlOqhwJw';
     
         mapRef.current = new mapboxgl.Map({
             container: mapContainerRef.current,
